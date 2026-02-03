@@ -5,17 +5,17 @@ import { MdOutlinePause } from "react-icons/md";
 import { datacontext } from '../context/UserContext';
 
 const Player = () => {
-    let {playingSong, playSong, pauseSong } = useContext(datacontext)
+    let {playingSong, playSong, pauseSong, index } = useContext(datacontext)
   return (
     <div className='w-full md:w-[60%] h-[100px] bg-white fixed bottom-[55px] md:bottom-0 
     rounded-t-[30px] shadow-lg flex pt-[10px] md:items-center md:p-[5px] '>
         <div className='flex justify-start items-start pl-[30px] gap-[20px] w-[80%] h-[80%] cursor-pointer'>
             <div>
-                <img src={songsData[0].image} className='w-[60px] max-h-[60px] md:max-h-[80px] md:w-[80px] rounded-lg object-fill ' />
+                <img src={songsData[index].image} className='w-[60px] max-h-[60px] md:max-h-[80px] md:w-[80px] rounded-lg object-fill ' />
             </div>
             <div className='text-[20px] md:text-[25px] '>
-                <div className='text-black text-[1.1em] font-semibold '>{songsData[0].name}</div>
-                <div className='text-gray-800 text-[0.6em] font-semibold'>{songsData[0].singer}</div>
+                <div className='text-black text-[1.1em] font-semibold '>{songsData[index].name}</div>
+                <div className='text-gray-800 text-[0.6em] font-semibold'>{songsData[index].singer}</div>
             </div>
         </div>
         <div className='w-[20%] h-[100%] md:flex justify-center items-center '>

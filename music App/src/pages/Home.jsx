@@ -44,7 +44,7 @@ function Home() {
   
   return (
     <div className='w-full h-screen bg-black flex relative overflow-hidden '>
-      <MdKeyboardArrowDown className='absolute text-white top-[25px] md:hidden left-[10%] text-[30px] ' onClick={()=>setArrow(prev=>!prev)}/>
+      <MdKeyboardArrowDown className={`absolute text-white top-[25px] md:hidden left-[10%] text-[30px] ${arrow?"rotate-[-90deg]":null} cursor-pointer `} onClick={()=>setArrow(prev=>!prev)}/>
 
       {!arrow?<>
       <div className='w-full md:w-[50%] h-full flex justify-start items-center  pt-[20px] md:pt-[120px] flex-col gap-7 '>

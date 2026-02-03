@@ -8,7 +8,7 @@ function Search() {
   let [input, setInput] = useState("")
   let [newList, setnewList] = useState([])
   useEffect(() => {
-    let a = songsData.filter((song) => song.name.toLowerCase().includes(input) || (song.singer.toLowerCase().includes(input)))
+    let a = songsData.filter((song) => (song.name.toLowerCase().includes(input) || (song.singer.toLowerCase().includes(input)) || (song.singer.toUpperCase().includes(input)) || song.name.toUpperCase().includes(input)))
     setnewList(a)
   }, [input])
   return (
@@ -16,7 +16,7 @@ function Search() {
     md:pt-[100px]  h-[100vh] gap-[30px]'>
       <Player />
 
-      <form action="" className='w-[90%] md:max-[70%] h-[60px] flex justify-center items-center gap-5
+      <form action="" className='w-[90%] md:w-[60%] h-[60px] flex justify-center items-center gap-5
         bg-gray-800 rounded-lg overflow-hidden p-[15px] md:p-0 ' onSubmit={(e) => {
             e.preventDefault()
         }}   >
@@ -24,11 +24,15 @@ function Search() {
         <input type="text"  className='w-[90%] h-[100%] bg-gray-800 outline-none border-0 p-[10px] text-[18px]
          text-white ' placeholder='Search song...' onChange={(e) => setInput(e.target.value)} value={input} />
       </form>
-      <div className='w-[100%] h-[100%] flex-col flex justify-start p-[20px] overflow-auto  items-center gap-5'>
+      {input ? <div className='w-[100%] h-[65%] md:h-[100%] flex-col flex justify-start p-[10px] overflow-auto  items-center gap-5'>
         {newList.map((song) => (
           <Card name={song.name} image={song.image} singer={song.singer} songIndex={song.id-1} /> 
         ))}
       </div>
+      : 
+      <div className='text-gray-700 text-[30px] font-semibold'>Search Songs</div>
+      }
+      
     </div>
   )
 }

@@ -4,9 +4,20 @@ import { MdOutlinePlaylistAdd } from "react-icons/md";
 import { IoHeartOutline } from "react-icons/io5";
 import { FiHeart } from "react-icons/fi";
 import { datacontext } from '../context/UserContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { AddSong, RemoveSong } from '../redux/PlaylistSlice';
+import { MdOutlinePlaylistRemove } from "react-icons/md";
+import { AddLiked, RemoveLiked } from '../redux/LikedSlice';
+import { GoHeartFill } from "react-icons/go";
 
 const Card = ({name, image, singer, songIndex}) => {
     let {playSong, index, setIndex}=useContext(datacontext)
+    let dispatch = useDispatch()
+    let gaana=useSelector(state => state.playlist)
+    const songExistInPlaylist=gaana.some((song)=>(song.songIndex == songIndex))
+    let likedSong = useSelector(state=>state.liked)
+    const songExistInLiked = likedSong.some((song) => song.songIndex===songIndex)
+    
   return (
     <div className='w-[90%] h-[70px] md:h-[110px] flex justify-center items-center  
     bg-gray-800 rounded-lg p-[10px] md:p-[20px] hover:bg-gray-500 transition-all '>
@@ -23,13 +34,32 @@ const Card = ({name, image, singer, songIndex}) => {
         </div>
       </div>
       <div className='flex justify-center items-center gap-5 w-[70%] h-[30%] text-[15px] md:text-[20px]'>
-        <div>
+        {!songExistInPlaylist && (<div onClick={() => {
+          dispatch(AddSong({name:name, image:image, singer:singer, songIndex:songIndex}))
+        }}>
             <MdOutlinePlaylistAdd className='text-white text-[1.5em] cursor-pointer' />
 
-        </div>
-        <div>
-            <IoHeartOutline className='text-white text-[1.3em] cursor-pointer' />
-        </div>
+        </div>) }
+
+        {songExistInPlaylist && (<div onClick={() => {
+          dispatch(RemoveSong(songIndex))
+        }}>
+            <MdOutlinePlaylistRemove className='text-white text-[1.5em] cursor-pointer' />
+            
+        </div>) }
+        {!songExistInLiked && (<div onClick={()=> {
+          dispatch(AddLiked({name:name, image:image, singer:singer, songIndex:songIndex}))
+        }}>
+          <IoHeartOutline className='text-white text-[1.3em] cursor-pointer' />
+        </div>)}
+        
+        {songExistInLiked && (<div onClick={()=> {
+          dispatch(RemoveLiked(songIndex))
+        }}>
+            <GoHeartFill className='text-white text-[1.3em] cursor-pointer' />
+        </div>)}
+
+        
       </div>
     </div>
   )
